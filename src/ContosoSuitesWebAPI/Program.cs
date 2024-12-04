@@ -39,18 +39,17 @@ builder.Services.AddSingleton<Kernel>((_) =>
         endpoint: builder.Configuration["AzureOpenAI:Endpoint"]!,
         apiKey: builder.Configuration["AzureOpenAI:ApiKey"]!
     );
+
+#pragma warning disable SKEXP0010 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+    kernelBuilder.AddAzureOpenAITextEmbeddingGeneration(
+     deploymentName: builder.Configuration["AzureOpenAI:EmbeddingDeploymentName"]!,
+     endpoint: builder.Configuration["AzureOpenAI:Endpoint"]!,
+     apiKey: builder.Configuration["AzureOpenAI:ApiKey"]!
+    );
+#pragma warning restore SKEXP0010 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+
     kernelBuilder.Plugins.AddFromType<DatabaseService>();
     return kernelBuilder.Build();
-});
-
-
-builder.Services.AddSingleton<AzureOpenAIClient>((_) =>
-{
-    var endpoint = new Uri(builder.Configuration["AzureOpenAI:Endpoint"]!);
-    var credentials = new AzureKeyCredential(builder.Configuration["AzureOpenAI:ApiKey"]!);
-
-    var client = new AzureOpenAIClient(endpoint, credentials);
-    return client;
 });
 
 var app = builder.Build();
