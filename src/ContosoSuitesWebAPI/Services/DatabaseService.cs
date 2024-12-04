@@ -36,7 +36,7 @@ public class DatabaseService : IDatabaseService
     }
 
     [KernelFunction]
-    [Description("Get all bookings for a single hotel.")]
+    [Description("get_hotels")]
     public async Task<IEnumerable<Booking>> GetBookingsForHotel(int hotelId)
     {
         var sql = "SELECT BookingID, CustomerID, HotelID, StayBeginDate, StayEndDate, NumberOfGuests FROM dbo.Booking WHERE HotelID = @HotelID";
